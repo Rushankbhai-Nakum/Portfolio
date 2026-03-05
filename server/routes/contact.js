@@ -50,52 +50,64 @@ router.post('/', validateContactForm, async (req, res) => {
     });
     await contact.save();
 
-    // Configure nodemailer transporter
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+    console.log('✓ Contact saved to database:', { name, email });
 
-    // Email content
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.RECIPIENT_EMAIL,
-      subject: `Portfolio Contact: Message from ${name}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px;">
-          <h2 style="color: #000; border-bottom: 2px solid #000; padding-bottom: 10px;">
-            New Contact Form Submission
-          </h2>
-          
-          <div style="margin: 20px 0;">
-            <p style="margin: 10px 0;">
-              <strong>Name:</strong> ${name}
-            </p>
-            <p style="margin: 10px 0;">
-              <strong>Email:</strong> ${email}
-            </p>
-            <p style="margin: 10px 0;">
-              <strong>Message:</strong>
-            </p>
-            <div style="background: #f5f5f5; padding: 15px; border-left: 4px solid #000; margin-top: 10px;">
-              ${message.replace(/\n/g, '<br>')}
+    // Try to send email (optional - won't fail if email not configured)
+    try {
+      // Check if email credentials are configured
+      if (process.env.EMAIL_USER && process.env.EMAIL_PASS && 
+          process.env.EMAIL_USER !== 'your-email@gmail.com') {
+        
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+          }
+        });
+
+        const mailOptions = {
+          from: process.env.EMAIL_USER,
+          to: process.env.RECIPIENT_EMAIL,
+          subject: `Portfolio Contact: Message from ${name}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px;">
+              <h2 style="color: #000; border-bottom: 2px solid #000; padding-bottom: 10px;">
+                New Contact Form Submission
+              </h2>
+              
+              <div style="margin: 20px 0;">
+                <p style="margin: 10px 0;">
+                  <strong>Name:</strong> ${name}
+                </p>
+                <p style="margin: 10px 0;">
+                  <strong>Email:</strong> ${email}
+                </p>
+                <p style="margin: 10px 0;">
+                  <strong>Message:</strong>
+                </p>
+                <div style="background: #f5f5f5; padding: 15px; border-left: 4px solid #000; margin-top: 10px;">
+                  ${message.replace(/\n/g, '<br>')}
+                </div>
+              </div>
+              
+              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; font-size: 12px;">
+                <p>This message was sent from your portfolio contact form.</p>
+                <p>Received on: ${new Date().toLocaleString()}</p>
+              </div>
             </div>
-          </div>
-          
-          <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; font-size: 12px;">
-            <p>This message was sent from your portfolio contact form.</p>
-            <p>Received on: ${new Date().toLocaleString()}</p>
-          </div>
-        </div>
-      `,
-      replyTo: email
-    };
+          `,
+          replyTo: email
+        };
 
-    // Send email
-    await transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions);
+        console.log('✓ Email sent successfully');
+      } else {
+        console.log('⚠ Email not configured - message saved to database only');
+      }
+    } catch (emailError) {
+      console.error('⚠ Email sending failed (message still saved):', emailError.message);
+    }
 
     res.status(200).json({ 
       message: 'Message sent successfully',
@@ -103,17 +115,11 @@ router.post('/', validateContactForm, async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Contact form error:', error);
-    
-    // Check if it's a nodemailer error
-    if (error.code === 'EAUTH') {
-      return res.status(500).json({ 
-        error: 'Email configuration error. Please contact the administrator.' 
-      });
-    }
+    console.error('✗ Contact form error:', error);
     
     res.status(500).json({ 
-      error: 'Failed to send message. Please try again later.' 
+      error: 'Failed to send message. Please try again later.',
+      details: error.message 
     });
   }
 });
