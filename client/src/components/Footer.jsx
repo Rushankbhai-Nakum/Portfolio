@@ -12,7 +12,7 @@ const Footer = () => {
           {/* Social Links */}
           <div className="flex space-x-6">
             <a 
-              href="https://github.com/yourusername" 
+              href="https://github.com/Rushankbhai-Nakum" 
               target="_blank" 
               rel="noopener noreferrer"
               className="hover:opacity-70 transition-opacity"
@@ -21,7 +21,7 @@ const Footer = () => {
               <FiGithub size={24} />
             </a>
             <a 
-              href="https://linkedin.com/in/yourusername" 
+              href="https://www.linkedin.com/in/rushanksinh-nakum-578452291/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="hover:opacity-70 transition-opacity"
@@ -30,7 +30,7 @@ const Footer = () => {
               <FiLinkedin size={24} />
             </a>
             <a 
-              href="mailto:your.email@gmail.com"
+              href="mailto:rushanksinhnakum09@gmail.com"
               className="hover:opacity-70 transition-opacity"
               aria-label="Email Contact"
             >
@@ -40,8 +40,8 @@ const Footer = () => {
           
           {/* Copyright */}
           <div className="text-gray-400 text-sm text-center md:text-right">
-            <p>© {new Date().getFullYear()} Portfolio. Built with React, Node.js & MongoDB.</p>
-            <p className="mt-1">Designed & Developed with ❤️</p>
+            <p>© {new Date().getFullYear()} Rushanksinh Nakum. All rights reserved.</p>
+            <p className="mt-1">Building scalable web applications with the MERN stack.</p>
           </div>
         </div>
       </div>

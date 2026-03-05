@@ -4,87 +4,122 @@
  */
 import ScrollReveal from './ScrollReveal';
 
+// Reusable Experience Card Component
+const ExperienceCard = ({ experience, index }) => {
+  return (
+    <ScrollReveal>
+      <div className="relative mb-12 md:mb-16">
+        {/* Timeline Dot */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rounded-full border-4 border-black z-10 hidden md:block"></div>
+        
+        {/* Card Container */}
+        <div className={`md:w-[calc(50%-2rem)] ${
+          index % 2 === 0 ? 'md:ml-auto md:pl-8' : 'md:mr-auto md:pr-8'
+        }`}>
+          <div className="border border-white p-6 bg-black hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 group relative">
+            {/* Current Badge */}
+            {experience.current && (
+              <div className="absolute top-4 right-4 bg-white text-black px-3 py-1 text-xs font-bold group-hover:bg-black group-hover:text-white transition-colors">
+                CURRENT
+              </div>
+            )}
+            
+            {/* Job Title */}
+            <h3 className="text-2xl font-bold mb-2 group-hover:text-black">
+              {experience.title}
+            </h3>
+            
+            {/* Company */}
+            <p className="text-xl font-semibold mb-2 opacity-90">
+              {experience.company}
+            </p>
+            
+            {/* Location */}
+            <p className="text-sm mb-2 opacity-80 flex items-center gap-2">
+              <span>📍</span>
+              {experience.location}
+            </p>
+            
+            {/* Duration */}
+            <p className="text-sm mb-4 opacity-70 flex items-center gap-2">
+              <span>📅</span>
+              {experience.duration}
+            </p>
+            
+            {/* Responsibilities */}
+            <div className="pt-4 border-t border-current">
+              <p className="text-sm font-semibold mb-3 opacity-80">Key Responsibilities:</p>
+              <ul className="space-y-2">
+                {experience.responsibilities.map((resp, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm">
+                    <span className="mt-1 text-xs">▹</span>
+                    <span>{resp}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+  );
+};
+
 const Experience = () => {
   const experiences = [
     {
-      type: 'Running Internship',
-      duration: '4 Months',
-      company: 'Tech Solutions Pvt Ltd',
-      role: 'Full Stack Developer Intern',
-      period: 'Jan 2024 - Present',
-      description: [
-        'Developing and maintaining web applications using MERN stack with focus on scalability',
-        'Collaborating with senior developers to implement new features and optimize existing code',
-        'Participating in daily standups, code reviews, and agile development practices'
-      ],
-      current: true
+      title: 'Full Stack Developer Intern',
+      company: 'Innovatix Technologies',
+      location: 'Surat, India',
+      duration: 'Jan 2026 – Present',
+      current: true,
+      responsibilities: [
+        'Developed MERN stack applications with focus on scalability and performance',
+        'Implemented JWT authentication for secure user management',
+        'Built Nayvora Solutions company website with modern design principles',
+        'Integrated blog system and contact form with backend API'
+      ]
     },
     {
-      type: 'Summer Internship',
-      duration: '1 Month',
-      company: 'Digital Innovations Inc',
-      role: 'Frontend Developer Intern',
-      period: 'June 2023',
-      description: [
-        'Built responsive user interfaces using React and Tailwind CSS for client projects',
-        'Worked on component library development and implemented reusable UI components',
-        'Improved website performance by optimizing images and implementing lazy loading'
-      ],
-      current: false
+      title: 'Frontend Developer Intern',
+      company: 'QODORS Technologies',
+      location: 'Remote',
+      duration: 'May 28, 2025 – June 11, 2025',
+      current: false,
+      responsibilities: [
+        'Built responsive UI using ReactJS and modern CSS frameworks',
+        'Developed Notes Management Application with CRUD functionality',
+        'Implemented reusable components following best practices'
+      ]
     }
   ];
 
   return (
-    <section className="min-h-screen py-20 px-4">
-      <div className="max-w-4xl mx-auto">
+    <section className="min-h-screen py-20 px-4 bg-black text-white">
+      <div className="max-w-5xl mx-auto">
+        {/* Section Header */}
         <ScrollReveal>
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Experience</h2>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Experience</h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              My professional journey in software development and technology.
+            </p>
+          </div>
         </ScrollReveal>
         
+        {/* Timeline Container */}
         <div className="relative">
-          {/* Timeline Line */}
-          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-black"></div>
+          {/* Vertical Timeline Line - Hidden on mobile */}
+          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-white opacity-30"></div>
           
-          <div className="space-y-12">
+          {/* Experience Cards */}
+          <div>
             {experiences.map((exp, index) => (
-              <ScrollReveal key={index}>
-                <div className="relative">
-                  {/* Timeline Dot */}
-                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-black rounded-full border-4 border-white z-10"></div>
-                  
-                  {/* Content Card */}
-                  <div className={`md:w-[calc(50%-2rem)] ${index % 2 === 0 ? 'md:ml-auto md:pl-8' : 'md:mr-auto md:pr-8'}`}>
-                    <div className="border-2 border-black p-6 bg-white hover:bg-black hover:text-white transition-all duration-300 relative">
-                      {/* Current Badge */}
-                      {exp.current && (
-                        <div className="absolute top-4 right-4 bg-black text-white px-3 py-1 text-xs font-bold">
-                          CURRENT
-                        </div>
-                      )}
-                      
-                      <div className="mb-4">
-                        <h3 className="text-2xl font-bold mb-2">{exp.type}</h3>
-                        <p className="text-sm opacity-70 mb-1">Duration: {exp.duration}</p>
-                      </div>
-                      
-                      <div className="mb-4">
-                        <p className="text-xl font-semibold mb-1">{exp.role}</p>
-                        <p className="text-lg opacity-80 mb-1">{exp.company}</p>
-                        <p className="text-sm opacity-70">{exp.period}</p>
-                      </div>
-                      
-                      <ul className="space-y-2">
-                        {exp.description.map((desc, idx) => (
-                          <li key={idx} className="flex items-start">
-                            <span className="mr-2 mt-1">•</span>
-                            <span className="text-sm">{desc}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
+              <ExperienceCard 
+                key={index} 
+                experience={exp} 
+                index={index} 
+              />
             ))}
           </div>
         </div>

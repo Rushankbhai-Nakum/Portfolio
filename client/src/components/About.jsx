@@ -3,12 +3,62 @@
  * Landing page with personal introduction and skills showcase
  */
 import ScrollReveal from './ScrollReveal';
+import { 
+  FaReact, FaNodeJs, FaGitAlt, FaGithub, FaPython, 
+  FaHtml5, FaCss3Alt, FaNpm 
+} from 'react-icons/fa';
+import { 
+  SiJavascript, SiTailwindcss, SiExpress, SiMongodb, 
+  SiMysql, SiPostman, SiVisualstudiocode, SiC, SiCplusplus 
+} from 'react-icons/si';
+import { BiData } from 'react-icons/bi';
 
 const About = () => {
   const skills = [
-    { category: 'Frontend', items: ['React', 'JavaScript', 'Tailwind CSS', 'HTML/CSS'] },
-    { category: 'Backend', items: ['Node.js', 'Express', 'MongoDB', 'REST APIs'] },
-    { category: 'Tools', items: ['Git', 'VS Code', 'Postman', 'npm'] }
+    { 
+      category: 'Frontend Development', 
+      items: [
+        { name: 'React.js', icon: <FaReact /> },
+        { name: 'JavaScript (ES6+)', icon: <SiJavascript /> },
+        { name: 'Tailwind CSS', icon: <SiTailwindcss /> },
+        { name: 'HTML5', icon: <FaHtml5 /> },
+        { name: 'CSS3', icon: <FaCss3Alt /> }
+      ]
+    },
+    { 
+      category: 'Backend Development', 
+      items: [
+        { name: 'Node.js', icon: <FaNodeJs /> },
+        { name: 'Express.js', icon: <SiExpress /> },
+        { name: 'REST API Development', icon: <BiData /> }
+      ]
+    },
+    { 
+      category: 'Databases', 
+      items: [
+        { name: 'MongoDB', icon: <SiMongodb /> },
+        { name: 'MySQL', icon: <SiMysql /> }
+      ]
+    },
+    { 
+      category: 'Programming Languages', 
+      items: [
+        { name: 'C', icon: <SiC /> },
+        { name: 'C++', icon: <SiCplusplus /> },
+        { name: 'Python', icon: <FaPython /> },
+        { name: 'SQL', icon: <BiData /> }
+      ]
+    },
+    { 
+      category: 'Tools & Platforms', 
+      items: [
+        { name: 'Git', icon: <FaGitAlt /> },
+        { name: 'GitHub', icon: <FaGithub /> },
+        { name: 'VS Code', icon: <SiVisualstudiocode /> },
+        { name: 'Postman', icon: <SiPostman /> },
+        { name: 'npm', icon: <FaNpm /> }
+      ]
+    }
   ];
 
   return (
@@ -20,17 +70,16 @@ const About = () => {
             {/* Left Side - Text Content */}
             <div className="space-y-6">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-                Your Name
+                Rushanksinh Nakum
+                
               </h1>
               <div className="text-lg md:text-xl text-gray-300 space-y-4">
+                
                 <p>
-                  Full Stack Developer specializing in building exceptional digital experiences.
-                  Passionate about creating elegant solutions to complex problems using modern
-                  web technologies.
+                MERN Stack Developer | Full Stack Developer
                 </p>
                 <p>
-                  With expertise in MERN stack development, I transform ideas into scalable,
-                  user-friendly applications that make a difference.
+                  Full Stack Developer specializing in MERN stack development with experience building modern web applications. Passionate about solving real-world problems through efficient and scalable digital solutions.
                 </p>
               </div>
             </div>
@@ -39,7 +88,7 @@ const About = () => {
             <div className="flex justify-center md:justify-end">
               <div className="w-full max-w-md aspect-square bg-gray-800 border-4 border-white overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=600&fit=crop" 
+                  src="https://t3.ftcdn.net/jpg/06/01/17/18/360_F_601171862_l7yZ0wujj8o2SowiKTUsfLEEx8KunYNd.jpg" 
                   alt="Professional Developer"
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
                   loading="lazy"
@@ -52,15 +101,28 @@ const About = () => {
         {/* Skills Section */}
         <ScrollReveal>
           <div className="mt-20">
-            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Skills</h2>
-            <div className="grid md:grid-cols-3 gap-8">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
+              Skills & Technologies
+            </h2>
+            <p className="text-center text-gray-400 mb-12 text-lg">
+              Technologies and tools I use to build modern, scalable web applications.
+            </p>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {skills.map((skill, index) => (
                 <ScrollReveal key={skill.category}>
-                  <div className="border-2 border-white p-6 hover:bg-white hover:text-black transition-colors">
-                    <h3 className="text-2xl font-bold mb-4">{skill.category}</h3>
-                    <ul className="space-y-2">
-                      {skill.items.map(item => (
-                        <li key={item} className="text-lg">{item}</li>
+                  <div className="border border-white p-6 hover:bg-white hover:text-black transition-all duration-300 group">
+                    <h3 className="text-xl font-bold mb-4 pb-2 border-b border-current">
+                      {skill.category}
+                    </h3>
+                    <ul className="space-y-3">
+                      {skill.items.map((item, idx) => (
+                        <li key={idx} className="flex items-center gap-3 text-base">
+                          <span className="text-2xl group-hover:scale-110 transition-transform">
+                            {item.icon}
+                          </span>
+                          <span>{item.name}</span>
+                        </li>
                       ))}
                     </ul>
                   </div>
