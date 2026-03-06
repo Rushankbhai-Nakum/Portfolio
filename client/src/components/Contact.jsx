@@ -21,7 +21,9 @@ const Contact = () => {
     setStatus('');
     
     try {
-      const response = await axios.post('http://localhost:5000/api/contact', formData);
+      // Use environment variable for API URL, fallback to localhost for development
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const response = await axios.post(`${apiUrl}/api/contact`, formData);
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setStatus(''), 5000);
