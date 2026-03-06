@@ -27,9 +27,15 @@ const Contact = () => {
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setStatus(''), 5000);
-    } catch (error) {
-      setStatus('error');
+    } 
+      // catch (error) {
+      // setStatus('error');
+      // setTimeout(() => setStatus(''), 5000);
+      catch (error) {
+      console.log(error.response?.data);   // shows backend error in console
+      setStatus(error.response?.data?.error || "Something went wrong");
       setTimeout(() => setStatus(''), 5000);
+    
     } finally {
       setLoading(false);
     }
