@@ -31,11 +31,22 @@ const Contact = () => {
       // catch (error) {
       // setStatus('error');
       // setTimeout(() => setStatus(''), 5000);
+      // catch (error) {
+      // console.log(error.response?.data);   // shows backend error in console
+      // setStatus(error.response?.data?.error || "Something went wrong");
+      // setTimeout(() => setStatus(''), 5000);
+
+      // catch (error) {
+      //   const errorMessage = error.response?.data?.error || "Something went wrong";
+      //   setStatus(errorMessage);
+      //   setTimeout(() => setStatus(''), 5000);
+
       catch (error) {
-      console.log(error.response?.data);   // shows backend error in console
-      setStatus(error.response?.data?.error || "Something went wrong");
-      setTimeout(() => setStatus(''), 5000);
-    
+        const errorMessage = error.response?.data?.error || "Failed to send message";
+        setStatus("error");
+        alert(errorMessage); // show backend validation message
+        setTimeout(() => setStatus(''), 5000);
+
     } finally {
       setLoading(false);
     }
